@@ -2,3 +2,4 @@ Day 2 rehearsal notes
 
 The loop: add, commit, push.
 Second test — adding a whole new file this time.
+I typed this one myself.
