@@ -38,6 +38,20 @@ Each entry: student name + one-line reason from the notes. No inference beyond w
 
 v1 is one input, one output. Paste notes → get triage summary.
 
+## Data Model
+
+Supabase schema on Day 4:
+
+```
+name           text
+domain         text
+product_idea   text
+github_url     text
+vercel_url     text
+checkin_status text   -- values: Green / Yellow / Red
+notes          text
+```
+
 ## Success Metrics
 
 After 5 days of use, the instructor can name every student who was stuck that week without looking at notes. If the brief is clear and consistent enough to build a real mental model of the cohort, the tool WORKS.
