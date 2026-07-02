@@ -19,20 +19,28 @@ const C = {
   greenBorder: "#276749",
   greenText: "#6EE7A0",
   greenLabel: "#9AE6B4",
+  yellowBg: "#1C170D",
+  yellowBorder: "#B7791F",
+  yellowText: "#F6C56B",
+  yellowLabel: "#FBD38D",
   accent: "#4FC3F7",
 };
 
-const SYSTEM_PROMPT = `You are a student triage assistant for an intensive coding bootcamp instructor. Read the end-of-day check-in notes and sort every named student into exactly one of two buckets.
+const SYSTEM_PROMPT = `You are a student triage assistant for an intensive coding bootcamp instructor. Read the end-of-day check-in notes and sort every named student into exactly one of three buckets.
 
 Rules:
-- Binary only. Every student mentioned goes into exactly one bucket — no exceptions, no middle ground.
+- Every student mentioned goes into exactly one bucket — no exceptions, no duplicates.
+- needs_attention: stuck, behind, or hasn't asked for help.
+- watch: the signal is unclear or mixed — worth a quick check tomorrow.
+- ready: solid, on track, could be pushed further.
 - One line per student: their name + a specific reason drawn directly from the notes.
 - Do not infer, editorialize, or add anything not written in the notes.
-- If notes are too vague to judge a student, put them in needs_attention and note the signal was unclear.
+- If notes are too vague to judge a student, put them in watch and note the signal was unclear.
 
 Return ONLY this JSON structure. No markdown fences. No explanation. Nothing else.
 {
   "needs_attention": [{"name": "First Last", "reason": "specific reason from notes"}],
+  "watch": [{"name": "First Last", "reason": "specific reason from notes"}],
   "ready": [{"name": "First Last", "reason": "specific reason from notes"}]
 }`;
 
@@ -90,8 +98,9 @@ export default function CohortTriage() {
   };
 
   const attentionCount = result?.needs_attention?.length || 0;
+  const watchCount = result?.watch?.length || 0;
   const readyCount = result?.ready?.length || 0;
-  const total = attentionCount + readyCount;
+  const total = attentionCount + watchCount + readyCount;
 
   return (
     <div style={{
@@ -136,6 +145,14 @@ export default function CohortTriage() {
               color: C.redLabel,
             }}>
               {attentionCount} need follow-up
+            </span>
+            <span style={{ color: C.textMuted, fontSize: "11px" }}>·</span>
+            <span style={{
+              fontFamily: C.mono,
+              fontSize: "11px",
+              color: C.yellowLabel,
+            }}>
+              {watchCount} to watch
             </span>
             <span style={{ color: C.textMuted, fontSize: "11px" }}>·</span>
             <span style={{
@@ -345,6 +362,69 @@ export default function CohortTriage() {
                       <div style={{
                         fontSize: "13px",
                         color: C.redText,
+                        lineHeight: "1.55",
+                      }}>
+                        {s.reason}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Watch */}
+            {watchCount > 0 && (
+              <section style={{ marginBottom: "36px" }}>
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "14px",
+                }}>
+                  <span style={{ fontSize: "14px", lineHeight: 1 }}>🟡</span>
+                  <span style={{
+                    fontFamily: C.mono,
+                    fontSize: "10px",
+                    fontWeight: 700,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: C.yellowLabel,
+                  }}>
+                    Watch — Quick Check
+                  </span>
+                  <span style={{
+                    marginLeft: "auto",
+                    fontFamily: C.mono,
+                    fontSize: "11px",
+                    color: C.yellowText,
+                    backgroundColor: C.yellowBg,
+                    padding: "2px 9px",
+                    borderRadius: "12px",
+                    border: `1px solid ${C.yellowBorder}`,
+                  }}>
+                    {watchCount}
+                  </span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {result.watch.map((s, i) => (
+                    <div key={i} style={{
+                      backgroundColor: C.yellowBg,
+                      border: `1px solid ${C.yellowBorder}`,
+                      borderLeft: `3px solid ${C.yellowBorder}`,
+                      borderRadius: "8px",
+                      padding: "13px 16px",
+                    }}>
+                      <div style={{
+                        fontSize: "14px",
+                        fontWeight: 600,
+                        color: C.textPrimary,
+                        marginBottom: "4px",
+                      }}>
+                        {s.name}
+                      </div>
+                      <div style={{
+                        fontSize: "13px",
+                        color: C.yellowText,
                         lineHeight: "1.55",
                       }}>
                         {s.reason}

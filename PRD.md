@@ -2,7 +2,7 @@
 
 ## The Problem
 
-Instructors running intensive cohort programs can't reliably track which students are struggling in real time. Check-ins happen verbally during exercises, notes are scrabbled by hand, and the mental model of "who needs help" degrades by the next morning. When a stuck student goes unnoticed, they don't ask for help — they fall behind, lose confidence, and spend mental energy worrying about catching up instead of learning and building. In a 2-week program, one missed day compounds fast.
+Instructors running intensive cohort programs can't reliably track which students are struggling in real time. Check-ins happen verbally during exercises, notes are scribbled by hand, and the mental model of "who needs help" degrades by the next morning. When a stuck student goes unnoticed, they don't ask for help — they fall behind, lose confidence, and spend mental energy worrying about catching up instead of learning and building. In a 2-week program, one missed day compounds fast.
 
 ## Who Has It
 
@@ -40,4 +40,4 @@ v1 is one input, one output. Paste notes → get triage summary.
 
 ## Success Metrics
 
-After 5 days of use, the instructor can name every student who was stuck that week without looking at notes. If the brief is clear and consistent enough to build a real mental model of the cohort, the tool
+After 5 days of use, the instructor can name every student who was stuck that week without looking at notes. If the brief is clear and consistent enough to build a real mental model of the cohort, the tool WORKS.
